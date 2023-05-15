@@ -7,7 +7,6 @@ from PIL import Image
 import time
 
 
-
 #------------------------ Objetives and description ------------------------#
 
 st.set_page_config(page_title="Objetives", page_icon="🎯",
@@ -27,6 +26,9 @@ descripcion_proyecto = ("""
 <br>
 """)
 
+desire_dir = "CUSTOMERSEARCH/DATA/DATOS.csv"
+
+os.chdir(desire_dir)
 current_dir = os.getcwd()
 path = os.path.join(current_dir, "DATA/DATOS.csv")
 
@@ -37,16 +39,16 @@ def read_file(path):
 
 Datos = read_file(path)
 
-def mapa_de_bocas():
-        geo_subte = gpd.GeoDataFrame(Datos,
+def mapa_de_clientes():
+        geo_clientes = gpd.GeoDataFrame(Datos,
                                 geometry = gpd.points_from_xy(Datos.Longitud, Datos.Latitud),
                                 crs=3857)
-        geo_subte.rename(columns={"Longitud": "lon",
+        geo_clientes.rename(columns={"Longitud": "lon",
                                 "Latitud": "lat"}, inplace=True)
 
         colores = {'ABSA S.A': 'lightblue'}
 
-        fig = px.scatter_mapbox(geo_subte, lat='lat', lon='lon',
+        fig = px.scatter_mapbox(geo_clientes, lat='lat', lon='lon',
                                 hover_name='Cliente', zoom=11,
                                 mapbox_style='carto-positron',
                                 color='Cliente', color_discrete_map=colores,
@@ -70,4 +72,4 @@ with c1:
     ABSA_Image = Image.open("Grundfos Customer Images/Bomba_Flygt_Absa.png")
     st.image(ABSA_Image, width=110, use_column_width=False)
 with c2:
-        st.plotly_chart(mapa_de_bocas(), use_container_width=True)
+        st.plotly_chart(mapa_de_clientes(), use_container_width=True)
