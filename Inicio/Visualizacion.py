@@ -35,11 +35,11 @@ def read_file(path):
    df = pd.read_csv(path)
    return df
 
-bocas_del_subte = read_file(path)
+Datos = read_file(path)
 
 def mapa_de_bocas():
-        geo_subte = gpd.GeoDataFrame(DATOS,
-                                geometry = gpd.points_from_xy(DATOS.Longitud, DATOS.latitud),
+        geo_subte = gpd.GeoDataFrame(Datos,
+                                geometry = gpd.points_from_xy(Datos.Longitud, Datos.Latitud),
                                 crs=3857)
         geo_subte.rename(columns={"Longitud": "lon",
                                 "Latitud": "lat"}, inplace=True)
